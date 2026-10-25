@@ -1,0 +1,14 @@
+<%
+var posts = Array.isArray(page.posts) ? page.posts : page.posts.toArray();
+var heading = page.year ? [page.year, page.month, page.day].filter(function (v) { return v; }).join('/') : null;
+%>
+<% if (heading) { %>
+<h2 class="archive-year"><%= heading %></h2>
+<%- partial('_partial/post-list', { dateFormat: 'MM-DD' }) %>
+<% } else { %>
+<% var buckets = [], index = {}; posts.forEach(function (post) { var year = post.date.year(); if (!index[year]) { index[year] = []; buckets.push({ year: year, posts: index[year] }); } index[year].push(post); }); %>
+<% buckets.forEach(function (bucket) { %>
+<h2 class="archive-year"><a href="<%- url_for(config.archive_dir + '/' + bucket.year + '/') %>"><%= bucket.year %></a></h2>
+<%- partial('_partial/post-list', { list: bucket.posts, dateFormat: 'MM-DD' }) %>
+<% }) %>
+<% } %>

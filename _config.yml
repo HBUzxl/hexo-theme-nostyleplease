@@ -1,0 +1,11 @@
+date_format: YYYY-MM-DD
+excerpt_length: 200
+footer: 'Powered by [Hexo](https://hexo.io) · Theme [nostyleplease](https://github.com/HBUzxl/hexo-theme-nostyleplease)'
+nav:
+  home: { url: / }
+  archives: { url: /archives/ }
+  categories: { url: /categories/ }
+  about: { url: /about/ }
+# 站点图标路径，留空则不输出 <link rel="icon">
+favicon: ''
+back_text: '..'

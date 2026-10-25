@@ -1,0 +1,17 @@
+<header class="masthead">
+  <a class="site-title" href="<%- url_for('/') %>"><%= config.title %></a>
+  <%- partial('_partial/nav') %>
+</header>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.querySelector('.theme');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    document.querySelector('meta[name="theme-color"]').content = next === 'dark' ? '#121417' : '#ffffff';
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>

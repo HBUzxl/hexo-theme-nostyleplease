@@ -1,0 +1,4 @@
+<h1><%= page.category || __('categories') %></h1>
+<% if (page.content) { %><%- page.content %><% } %>
+<%- partial('_partial/post-list') %>
+<%- partial('_partial/pager') %>

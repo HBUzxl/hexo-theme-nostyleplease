@@ -1,0 +1,31 @@
+<%
+var posts = Array.isArray(page.posts) ? page.posts : page.posts.toArray();
+var length = theme.excerpt_length || 120;
+
+function excerpt(post) {
+  var html = post.description || '';
+  if (!html) {
+    // 取正文第一段，跳过代码块
+    var content = String(post.content || '').replace(/<(pre|figure)[\s\S]*?<\/\1>/gi, '');
+    var first = /<p[^>]*>([\s\S]*?)<\/p>/i.exec(content);
+    html = first ? first[1] : (post.excerpt || content);
+  }
+  var text = strip_html(html).replace(/\s+/g, ' ').trim();
+  if (text.length <= length) return text;
+  var out = text.slice(0, length);
+  if (/[A-Za-z0-9]$/.test(out)) {
+    var cut = out.lastIndexOf(' ');
+    if (cut > length * 0.6) out = out.slice(0, cut);
+  }
+  return out + '…';
+}
+%>
+<ul class="home-list">
+  <% posts.forEach(function (post) { %>
+  <li>
+    <h2 class="home-list-title"><a href="<%- url_for(post.path) %>"><%= post.title %></a></h2>
+    <time class="home-list-date" datetime="<%- date_xml(post.date) %>"><%= date(post.date, theme.date_format || config.date_format) %></time>
+    <p class="home-list-excerpt"><%- excerpt(post) %></p>
+  </li>
+  <% }) %>
+</ul>

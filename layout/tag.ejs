@@ -1,0 +1,4 @@
+<h1><%= page.tag || __('tags') %></h1>
+<% if (page.content) { %><%- page.content %><% } %>
+<%- partial('_partial/post-list') %>
+<%- partial('_partial/pager') %>

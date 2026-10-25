@@ -1,0 +1,7 @@
+<h1><%= page.title || __('categories') %></h1>
+<% if (page.content) { %><%- page.content %><% } %>
+<ul>
+  <% site.categories.sort('name').each(function (category) { %>
+  <li><a href="<%- url_for(category.path) %>"><%= category.name %></a> (<%= category.length %>)</li>
+  <% }) %>
+</ul>

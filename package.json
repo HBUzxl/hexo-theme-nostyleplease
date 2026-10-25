@@ -1,0 +1,10 @@
+{
+  "name": "hexo-theme-nostyleplease",
+  "version": "0.1.0",
+  "description": "A (nearly) no-CSS, fast, minimalist Hexo theme",
+  "keywords": ["hexo", "theme", "blog", "minimalist"],
+  "license": "MIT",
+  "repository": "github:HBUzxl/hexo-theme-nostyleplease",
+  "bugs": "https://github.com/HBUzxl/hexo-theme-nostyleplease/issues",
+  "homepage": "https://github.com/HBUzxl/hexo-theme-nostyleplease#readme"
+}

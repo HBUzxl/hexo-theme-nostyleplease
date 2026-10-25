@@ -1,0 +1,17 @@
+<%
+var items = locals.list != null ? locals.list : page.posts;
+var dateFormat = locals.dateFormat || theme.date_format || config.date_format;
+if (items && typeof items.toArray === 'function') items = items.sort('-date');
+
+var posts = Array.isArray(items) ? items : (items && items.toArray ? items.toArray() : []);
+
+function renderItem(post) {
+  return '<li><time datetime="' + date_xml(post.date) + '">' + date(post.date, dateFormat) + '</time> ' +
+    '<a href="' + url_for(post.path) + '">' + escape_html(post.title) + '</a></li>';
+}
+%>
+<% if (posts.length) { %>
+<ul class="post-list">
+<%- posts.map(renderItem).join('\n') %>
+</ul>
+<% } %>

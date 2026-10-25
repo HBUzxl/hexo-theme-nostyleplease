@@ -1,0 +1,7 @@
+<h1><%= page.title || __('tags') %></h1>
+<% if (page.content) { %><%- page.content %><% } %>
+<ul>
+  <% site.tags.sort('name').each(function (tag) { %>
+  <li><a href="<%- url_for(tag.path) %>"><%= tag.name %></a> (<%= tag.length %>)</li>
+  <% }) %>
+</ul>

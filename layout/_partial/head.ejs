@@ -1,0 +1,31 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#ffffff">
+  <script>(function () {
+    var t;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.dataset.theme = t;
+    document.querySelector('meta[name="theme-color"]').content = t === 'dark' ? '#121417' : '#ffffff';
+  })();</script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%
+  var pageTitle = page.title || config.title;
+  var description = (page.description || strip_html(page.excerpt || page.content || config.description || '').trim().replace(/\s+/g, ' ').substring(0, 200))
+    .replace(/&(?![#a-zA-Z0-9]+;)/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  var pageUrl = config.url.replace(/\/+$/, '') + ('/' + (config.root || '/') + (page.path || '').replace(/index\.html$/, '')).replace(/\/{2,}/g, '/');
+  %>
+  <% if (description) { %><meta name="description" content="<%- description %>"><% } %>
+  <title><%= pageTitle %></title>
+  <meta property="og:title" content="<%- pageTitle %>">
+  <% if (description) { %><meta property="og:description" content="<%- description %>"><% } %>
+  <meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>">
+  <meta property="og:url" content="<%- pageUrl %>">
+  <% if (page.path === '404.html') { %><meta name="robots" content="noindex"><% } else { %><link rel="canonical" href="<%- pageUrl %>"><% } %>
+  <meta property="og:site_name" content="<%- config.title %>">
+  <meta name="twitter:card" content="summary">
+  <% if (theme.favicon) { %><%- favicon_tag(theme.favicon) %><% } %>
+  <%- css('css/main') %>
+  <% if (page.mathjax) { %><%- partial('_partial/mathjax') %><% } %>
+</head>

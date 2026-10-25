@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'en' %>">
+<%- partial('_partial/head') %>
+<body>
+  <main class="page-content" aria-label="Content">
+    <div class="w">
+      <% if (!is_post()) { %><%- partial('_partial/masthead') %><% } %>
+      <%- body %>
+      <%- partial('_partial/footer') %>
+    </div>
+  </main>
+</body>
+<% if (is_post() && Array.isArray(page.custom_js)) { page.custom_js.forEach(function (name) { %>
+<%- js('js/' + name) %>
+<% }) } %>
+</html>

@@ -1,0 +1,21 @@
+<% var backText = theme.back_text != null ? theme.back_text : '..'; %>
+<% if (backText) { %><a class="back" href="<%- url_for('/') %>" aria-label="<%= __('back') %>"
+  onclick="var r=document.referrer;if(r&&r.indexOf(location.origin+'/')===0&&history.length>1){history.back();return false}"><%= backText %></a><% } %>
+
+<article>
+  <h1 class="entry-title"><%- page.title %></h1>
+
+  <p class="post-meta">
+    <time datetime="<%- date_xml(page.date) %>"><%= date(page.date, theme.date_format || config.date_format) %></time>
+    <% if (page.categories && page.categories.length) { %>
+    <span class="sep">·</span>
+    <% page.categories.each(function (category) { %><a href="<%- url_for(category.path) %>"><%= category.name %></a><% }) %>
+    <% } %>
+  </p>
+
+  <% if (page.toc) { %>
+  <nav class="floating-toc"><%- toc(page.content, { min_depth: 2, max_depth: 3, list_number: false, class: 'toc-list' }) %></nav>
+  <% } %>
+
+  <div class="post-content"><%- page.content %></div>
+</article>
