@@ -1,6 +1,6 @@
 <% var backText = theme.back_text != null ? theme.back_text : '..'; %>
 <% if (backText) { %><a class="back" href="<%- url_for('/') %>" aria-label="<%= __('back') %>"
-  onclick="var r=document.referrer;if(r&&r.indexOf(location.origin+'/')===0&&history.length>1){history.back();return false}"><%= backText %></a><% } %>
+  onclick="var r=document.referrer,s=!!r&&r.indexOf(location.origin+'/')===0;if(s&&!location.hash&&history.length>1){history.back();return false}if(s){location.replace(r);return false}"><%= backText %></a><% } %>
 
 <article>
   <h1 class="entry-title"><%- page.title %></h1>
