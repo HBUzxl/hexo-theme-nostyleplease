@@ -11,7 +11,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%
-  var pageTitle = page.title || config.title;
+  // 标签页标题：当前导航项 → 「导航名 - 站名」；首页只用站名
+  var navConfig = theme.nav || [];
+  var navPairs = Array.isArray(navConfig)
+    ? navConfig.map(function (item, index) { return [String(index), item]; })
+    : Object.keys(navConfig).map(function (id) { return [id, navConfig[id]]; });
+  var currentPath = url_for(page.path || '/').replace(/index\.html$/, '');
+  var navLabel = '';
+  navPairs.forEach(function (pair) {
+    var id = pair[0];
+    var item = pair[1];
+    if (!item || !item.url) return;
+    if (url_for(item.url).replace(/index\.html$/, '') !== currentPath) return;
+    navLabel = item.title || (/^[\w.-]+$/.test(id) ? __(id) : id);
+  });
+  var baseTitle = page.title || navLabel || page.category || page.tag || '';
+  var pageTitle = (!baseTitle || currentPath === url_for('/').replace(/index\.html$/, ''))
+    ? config.title
+    : baseTitle + ' - ' + config.title;
   var description = (page.description || strip_html(page.excerpt || page.content || config.description || '').trim().replace(/\s+/g, ' ').substring(0, 200))
     .replace(/&(?![#a-zA-Z0-9]+;)/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   var pageUrl = config.url.replace(/\/+$/, '') + ('/' + (config.root || '/') + (page.path || '').replace(/index\.html$/, '')).replace(/\/{2,}/g, '/');
